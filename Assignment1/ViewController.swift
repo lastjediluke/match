@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var flipCountLabel: UILabel!
     
+    //make sure buttons are connected
     @IBOutlet var cardButtons: [UIButton]!
 
 
