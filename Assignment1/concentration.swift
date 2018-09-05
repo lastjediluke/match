@@ -15,6 +15,11 @@ class concentration {   //this is the model
     var cards = Array<Card>()   //the () initializes the array to empty
     //or var cards = [Card]()
     var indexOfOneAndOnlyFaceUpCard: Int?   //if set, its an int. if not, its nil
+    var score = 0
+    var flipCounter = 0
+    
+    static var matching = 20
+    static var notMatching = -10
     
     func chooseCard(at index: Int){     //when i choose a card, i choose it by index
         if !cards[index].isMatched{
@@ -23,6 +28,12 @@ class concentration {   //this is the model
                 if cards[matchIndex].identifier == cards[index].identifier {
                     cards[matchIndex].isMatched = true
                     cards[index].isMatched = true
+                    score += (concentration.matching)
+                }
+                else {
+                    if cards[index].seen == true{
+                        score += (concentration.notMatching)
+                    }
                 }
                 cards[index].isFaceUp = true
                 indexOfOneAndOnlyFaceUpCard = nil
@@ -36,9 +47,12 @@ class concentration {   //this is the model
                 indexOfOneAndOnlyFaceUpCard = index
             }
         }
+        
+        flipCounter += 1
     }
+    
     init(numberOfPairsOfCards: Int){
-        //var unShuffledCards: [Card] = []
+        var unshuffled: [Card] = []
         //underscore means I don't care what this variable is
         //for identifier in 0..<numberOfPairsOfCards{
             //let card = Card(identifier: identifier)
@@ -46,19 +60,17 @@ class concentration {   //this is the model
             //cards.append(card)
             //cards.append(card)
 
-        
         for _ in 1...numberOfPairsOfCards {
             let card = Card()
-            //unShuffledCards += [card, card]
-            cards += [card, card]
-            
+            unshuffled += [card, card]
+            //cards += [card, card]
         }
         
-//        while !unShuffledCards.isEmpty {
-//            let randomIndex = unShuffledCards.count.arc4Random
-//            let card = unShuffledCards.remove(at: randomIndex)
-//            cards.append(card)
-//        }
+        while !unshuffled.isEmpty {
+            let randomIndex = unshuffled.count.random
+            let card = unshuffled.remove(at: randomIndex)
+            cards.append(card)
+        }
     }
     
     //TODO
